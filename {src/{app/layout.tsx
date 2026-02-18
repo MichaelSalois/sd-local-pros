@@ -48,10 +48,8 @@ export const metadata: Metadata = {
       'max-snippet': -1,
     },
   },
-  verification: {
-    other: {
-      'msvalidate.01': '21AF46CC4A58B3B4654A1882B5475256',
-    },
+  other: {
+    'msvalidate.01': '21AF46CC4A58B3B4654A1882B5475256',
   },
 };
 
@@ -98,7 +96,6 @@ export default function RootLayout({
             alt=""
           />
         </noscript>
-	<meta name="msvalidate.01" content="21AF46CC4A58B3B4654A1882B5475256" />
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
