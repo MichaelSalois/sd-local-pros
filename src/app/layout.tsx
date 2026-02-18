@@ -4,9 +4,6 @@ import './globals.css';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 
-const GA_MEASUREMENT_ID = 'G-P6H81F7W9Z';
-const META_PIXEL_ID = '1567348854472021';
-
 export const metadata: Metadata = {
   metadataBase: new URL('https://sdlocalpros.com'),
   title: {
@@ -59,7 +56,7 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <Script
-          src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
+          src="https://www.googletagmanager.com/gtag/js?id=G-P6H81F7W9Z"
           strategy="afterInteractive"
         />
         <Script id="google-analytics" strategy="afterInteractive">
@@ -67,7 +64,7 @@ export default function RootLayout({
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
-            gtag('config', '${GA_MEASUREMENT_ID}');
+            gtag('config', 'G-P6H81F7W9Z');
           `}
         </Script>
         <Script id="meta-pixel" strategy="afterInteractive">
@@ -80,7 +77,7 @@ export default function RootLayout({
             t.src=v;s=b.getElementsByTagName(e)[0];
             s.parentNode.insertBefore(t,s)}(window, document,'script',
             'https://connect.facebook.net/en_US/fbevents.js');
-            fbq('init', '${META_PIXEL_ID}');
+            fbq('init', '1567348854472021');
             fbq('track', 'PageView');
           `}
         </Script>
@@ -89,7 +86,7 @@ export default function RootLayout({
             height="1"
             width="1"
             style={{ display: 'none' }}
-            src={`https://www.facebook.com/tr?id=${META_PIXEL_ID}&ev=PageView&noscript=1`}
+            src="https://www.facebook.com/tr?id=1567348854472021&ev=PageView&noscript=1"
             alt=""
           />
         </noscript>
