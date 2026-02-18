@@ -1,75 +1,66 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
+import { supabase } from '@/lib/supabase';
 
-// ============================================================
-// POST /api/submit-listing
-// Handles "Add a Business" form submissions
-// Sends alert via Zapier webhook (email + SMS)
-// ============================================================
-
-const ZAPIER_WEBHOOK_URL = process.env.ZAPIER_WEBHOOK_URL || '';
-
-export async function POST(request: NextRequest) {
+export async function POST(request: Request) {
   try {
     const body = await request.json();
 
+    const {
+      businessName,
+      category,
+      neighborhood,
+      contactName,
+      contactEmail,
+      contactPhone,
+      address,
+      website,
+      message,
+    } = body;
+
     // Basic validation
-    const required = ['businessName', 'categorySlug', 'neighborhoodSlug', 'contactName', 'contactEmail'];
-    for (const field of required) {
-      if (!body[field]) {
-        return NextResponse.json(
-          { error: `Missing required field: ${field}` },
-          { status: 400 }
-        );
-      }
+    if (!businessName || !contactName || !contactEmail) {
+      return NextResponse.json(
+        { error: 'Business name, contact name, and email are required.' },
+        { status: 400 }
+      );
     }
 
-    // Prepare the submission data
-    const submission = {
-      type: 'add',
-      businessName: body.businessName,
-      categorySlug: body.categorySlug,
-      neighborhoodSlug: body.neighborhoodSlug,
-      contactName: body.contactName,
-      contactEmail: body.contactEmail,
-      contactPhone: body.phone || '',
-      address: body.address || '',
-      website: body.website || '',
-      description: body.description || '',
-      submittedAt: new Date().toISOString(),
-      status: 'pending',
-    };
+    // Insert into Supabase
+    const { data, error } = await supabase
+      .from('form_submissions')
+      .insert({
+        type: 'add',
+        business_name: businessName,
+        category: category || null,
+        neighborhood: neighborhood || null,
+        contact_name: contactName,
+        contact_email: contactEmail,
+        contact_phone: contactPhone || null,
+        address: address || null,
+        website: website || null,
+        message: message || null,
+        status: 'pending',
+      })
+      .select()
+      .single();
 
-    // TODO: When Supabase is set up, save to database here
-    // const { data, error } = await supabase.from('submissions').insert(submission);
-
-    // Send Zapier webhook alert (email + SMS notification)
-    if (ZAPIER_WEBHOOK_URL) {
-      try {
-        await fetch(ZAPIER_WEBHOOK_URL, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            alert_type: 'New Business Submission',
-            business_name: submission.businessName,
-            category: submission.categorySlug,
-            neighborhood: submission.neighborhoodSlug,
-            contact_name: submission.contactName,
-            contact_email: submission.contactEmail,
-            contact_phone: submission.contactPhone,
-            website: submission.website,
-            submitted_at: submission.submittedAt,
-            message: `New business "${submission.businessName}" submitted for ${submission.categorySlug} in ${submission.neighborhoodSlug}. Contact: ${submission.contactName} (${submission.contactEmail})`,
-          }),
-        });
-      } catch (webhookErr) {
-        // Don't fail the request if webhook fails
-        console.error('Zapier webhook failed:', webhookErr);
-      }
+    if (error) {
+      console.error('Supabase error:', error);
+      return NextResponse.json(
+        { error: 'Failed to submit listing. Please try again.' },
+        { status: 500 }
+      );
     }
 
-    return NextResponse.json({ success: true, message: 'Submission received' });
+    return NextResponse.json(
+      { success: true, message: 'Listing submitted successfully!', id: data.id },
+      { status: 200 }
+    );
   } catch (err) {
     console.error('Submit listing error:', err);
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    return NextResponse.json(
+      { error: 'An unexpected error occurred.' },
+      { status: 500 }
+    );
   }
 }
