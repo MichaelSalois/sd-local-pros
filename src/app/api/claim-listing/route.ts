@@ -44,6 +44,28 @@ export async function POST(request: Request) {
       );
     }
 
+    // Fire Zapier webhook for email/SMS notification
+    const webhookUrl = process.env.ZAPIER_WEBHOOK_URL;
+    if (webhookUrl) {
+      try {
+        await fetch(webhookUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            type: 'claim_request',
+            businessName,
+            contactName,
+            contactEmail,
+            contactPhone: contactPhone || 'Not provided',
+            message: message || 'Not provided',
+            submittedAt: new Date().toISOString(),
+          }),
+        });
+      } catch (webhookError) {
+        console.error('Zapier webhook error:', webhookError);
+      }
+    }
+
     return NextResponse.json(
       { success: true, message: 'Claim submitted successfully!', id: data.id },
       { status: 200 }
