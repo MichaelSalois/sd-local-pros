@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Breadcrumbs } from '@/components/ui';
 import {
   CheckCircle2,
@@ -8,25 +8,108 @@ import {
   BarChart3,
   Edit3,
   Star,
-  TrendingUp,
   BadgeCheck,
-  Globe,
-  Megaphone,
   ArrowRight,
-  Sparkles,
   Crown,
+  Search,
+  X,
 } from 'lucide-react';
+
+interface BusinessResult {
+  id: string;
+  name: string;
+  category_slug: string;
+  neighborhood_slug: string;
+  phone: string;
+  address: string;
+}
 
 export default function ClaimPage() {
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  // Business search state
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchResults, setSearchResults] = useState<BusinessResult[]>([]);
+  const [selectedBusiness, setSelectedBusiness] = useState<BusinessResult | null>(null);
+  const [showDropdown, setShowDropdown] = useState(false);
+  const [searching, setSearching] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  // Debounced search
+  useEffect(() => {
+    if (searchQuery.length < 2 || selectedBusiness) {
+      setSearchResults([]);
+      setShowDropdown(false);
+      return;
+    }
+
+    const timer = setTimeout(async () => {
+      setSearching(true);
+      try {
+        const res = await fetch(`/api/search-businesses?q=${encodeURIComponent(searchQuery)}`);
+        const data = await res.json();
+        setSearchResults(data.businesses || []);
+        setShowDropdown(true);
+      } catch {
+        setSearchResults([]);
+      } finally {
+        setSearching(false);
+      }
+    }, 300);
+
+    return () => clearTimeout(timer);
+  }, [searchQuery, selectedBusiness]);
+
+  // Close dropdown on outside click
+  useEffect(() => {
+    function handleClickOutside(e: MouseEvent) {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+        setShowDropdown(false);
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  function handleSelectBusiness(biz: BusinessResult) {
+    setSelectedBusiness(biz);
+    setSearchQuery(biz.name);
+    setShowDropdown(false);
+  }
+
+  function handleClearSelection() {
+    setSelectedBusiness(null);
+    setSearchQuery('');
+    setSearchResults([]);
+    inputRef.current?.focus();
+  }
+
+  function formatSlug(slug: string): string {
+    return slug
+      .split('-')
+      .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+      .join(' ');
+  }
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setLoading(true);
     const form = e.currentTarget;
     const data = new FormData(form);
-    const body = Object.fromEntries(data.entries());
+    const body: Record<string, string> = {};
+    data.forEach((val, key) => {
+      body[key] = val.toString();
+    });
+
+    // Attach selected business ID and name
+    if (selectedBusiness) {
+      body.businessId = selectedBusiness.id;
+      body.businessName = selectedBusiness.name;
+    } else {
+      body.businessName = searchQuery;
+    }
 
     try {
       const res = await fetch('/api/claim-listing', {
@@ -97,10 +180,81 @@ export default function ClaimPage() {
         <div className="container-tight max-w-2xl">
           <h2 className="text-title text-apple-black mb-6">Verify Your Business</h2>
           <form onSubmit={handleSubmit} className="space-y-6">
-            <div>
-              <label htmlFor="businessName" className="block text-body-sm font-medium text-apple-black mb-1.5">Business Name *</label>
-              <input id="businessName" name="businessName" type="text" required className="input-field" placeholder="Exact name as shown on your listing" />
+            {/* Business Search */}
+            <div ref={dropdownRef} className="relative">
+              <label htmlFor="businessSearch" className="block text-body-sm font-medium text-apple-black mb-1.5">
+                Find Your Business *
+              </label>
+              {selectedBusiness ? (
+                <div className="flex items-center gap-3 p-3 bg-apple-blue-bg/50 border border-apple-blue/20 rounded-xl">
+                  <CheckCircle2 className="w-5 h-5 text-apple-blue shrink-0" />
+                  <div className="flex-1 min-w-0">
+                    <p className="text-body font-semibold text-apple-black truncate">{selectedBusiness.name}</p>
+                    <p className="text-body-sm text-apple-gray-dark">
+                      {formatSlug(selectedBusiness.category_slug)} · {formatSlug(selectedBusiness.neighborhood_slug)}
+                    </p>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={handleClearSelection}
+                    className="p-1 hover:bg-white/60 rounded-lg transition-colors"
+                  >
+                    <X className="w-4 h-4 text-apple-gray-mid" />
+                  </button>
+                </div>
+              ) : (
+                <>
+                  <div className="relative">
+                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-apple-gray-mid" />
+                    <input
+                      ref={inputRef}
+                      id="businessSearch"
+                      type="text"
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      className="input-field !pl-10"
+                      placeholder="Start typing your business name..."
+                      autoComplete="off"
+                    />
+                    {searching && (
+                      <div className="absolute right-3 top-1/2 -translate-y-1/2">
+                        <div className="w-4 h-4 border-2 border-apple-blue/30 border-t-apple-blue rounded-full animate-spin" />
+                      </div>
+                    )}
+                  </div>
+                  {/* Dropdown Results */}
+                  {showDropdown && searchResults.length > 0 && (
+                    <div className="absolute z-50 left-0 right-0 mt-1 bg-white border border-gray-200 rounded-xl shadow-lg max-h-64 overflow-y-auto">
+                      {searchResults.map((biz) => (
+                        <button
+                          key={biz.id}
+                          type="button"
+                          onClick={() => handleSelectBusiness(biz)}
+                          className="w-full text-left px-4 py-3 hover:bg-apple-blue-bg/30 transition-colors border-b border-gray-50 last:border-0"
+                        >
+                          <p className="text-body font-medium text-apple-black">{biz.name}</p>
+                          <p className="text-body-sm text-apple-gray-dark">
+                            {formatSlug(biz.category_slug)} · {formatSlug(biz.neighborhood_slug)}
+                            {biz.phone ? ` · ${biz.phone}` : ''}
+                          </p>
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                  {showDropdown && searchResults.length === 0 && searchQuery.length >= 2 && !searching && (
+                    <div className="absolute z-50 left-0 right-0 mt-1 bg-white border border-gray-200 rounded-xl shadow-lg px-4 py-3">
+                      <p className="text-body-sm text-apple-gray-dark">
+                        No businesses found matching &ldquo;{searchQuery}&rdquo;.
+                      </p>
+                      <p className="text-body-sm text-apple-gray-mid mt-1">
+                        Not listed yet? <a href="/add-business" className="text-apple-blue hover:underline">Add your business</a> instead.
+                      </p>
+                    </div>
+                  )}
+                </>
+              )}
             </div>
+
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
               <div>
                 <label htmlFor="contactName" className="block text-body-sm font-medium text-apple-black mb-1.5">Your Name *</label>
@@ -129,7 +283,6 @@ export default function ClaimPage() {
       {/* ── Why Go Featured? ── */}
       <section className="section-gray !py-16">
         <div className="container-tight">
-          {/* Section Header */}
           <div className="text-center mb-12">
             <div className="inline-flex items-center gap-2 bg-apple-blue/10 text-apple-blue text-body-sm font-semibold px-4 py-1.5 rounded-full mb-4">
               <Crown className="w-4 h-4" />
@@ -143,9 +296,7 @@ export default function ClaimPage() {
             </p>
           </div>
 
-          {/* Free vs Featured Comparison */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto mb-12">
-            {/* Free Tier */}
             <div className="bg-white rounded-2xl p-6 border border-gray-200">
               <h3 className="text-body-lg font-semibold text-apple-black mb-1">Free Listing</h3>
               <p className="text-body-sm text-apple-gray-mid mb-5">What you get today</p>
@@ -168,7 +319,6 @@ export default function ClaimPage() {
               </div>
             </div>
 
-            {/* Featured Tier */}
             <div className="bg-white rounded-2xl p-6 border-2 border-apple-blue relative overflow-hidden">
               <div className="absolute top-0 right-0 bg-apple-blue text-white text-body-sm font-semibold px-3 py-1 rounded-bl-xl">
                 Most Popular
@@ -202,13 +352,11 @@ export default function ClaimPage() {
             </div>
           </div>
 
-          {/* Featured Listing Preview Card */}
           <div className="max-w-lg mx-auto mb-12">
             <p className="text-body-sm font-medium text-apple-gray-mid text-center mb-3 uppercase tracking-wide">
               What a Featured Listing Looks Like
             </p>
             <div className="rounded-2xl border-2 border-apple-blue bg-white shadow-md overflow-hidden">
-              {/* Featured Banner */}
               <div className="bg-apple-blue text-white text-center text-body-sm font-semibold py-1.5 tracking-wide">
                 ⭐ FEATURED PRO
               </div>
@@ -227,7 +375,6 @@ export default function ClaimPage() {
                     <span className="text-body-sm text-apple-gray-mid">(127)</span>
                   </div>
                 </div>
-                {/* Promo Banner */}
                 <div className="bg-apple-blue-bg rounded-lg px-3 py-2 mb-3">
                   <p className="text-body-sm font-semibold text-apple-blue">🎉 $50 Off First Service</p>
                   <p className="text-body-sm text-apple-gray-dark">New customers — mention SD Local Pros</p>
@@ -240,7 +387,6 @@ export default function ClaimPage() {
             </div>
           </div>
 
-          {/* CTA */}
           <div className="text-center">
             <p className="text-body text-apple-gray-dark mb-4">
               Interested in becoming a Featured Pro? Mention it in your claim request above, or reach out directly.

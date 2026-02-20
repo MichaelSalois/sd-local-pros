@@ -6,6 +6,7 @@ export async function POST(request: Request) {
     const body = await request.json();
 
     const {
+      businessId,
       businessName,
       contactName,
       contactEmail,
@@ -27,6 +28,7 @@ export async function POST(request: Request) {
       .insert({
         type: 'claim',
         business_name: businessName,
+        business_id: businessId || null,
         contact_name: contactName,
         contact_email: contactEmail,
         contact_phone: contactPhone || null,
@@ -54,6 +56,7 @@ export async function POST(request: Request) {
           body: JSON.stringify({
             type: 'claim_request',
             businessName,
+            businessId: businessId || 'Not matched — manual entry',
             contactName,
             contactEmail,
             contactPhone: contactPhone || 'Not provided',
