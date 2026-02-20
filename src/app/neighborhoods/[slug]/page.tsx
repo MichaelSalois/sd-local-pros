@@ -33,6 +33,12 @@ export default async function NeighborhoodPage({ params }: { params: { slug: str
   const allBusinesses = await getBusinessesByNeighborhood(neighborhood.slug);
   const tier1Categories = categories.filter((c) => c.tier === 1);
 
+  // Count businesses per category for this neighborhood
+  const categoryCounts: Record<string, number> = {};
+  for (const biz of allBusinesses) {
+    categoryCounts[biz.categorySlug] = (categoryCounts[biz.categorySlug] || 0) + 1;
+  }
+
   return (
     <>
       <section className="bg-gradient-to-b from-apple-blue-bg/30 to-white pt-12 pb-12">
@@ -64,6 +70,7 @@ export default async function NeighborhoodPage({ params }: { params: { slug: str
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {tier1Categories.map((cat) => {
               const Icon = iconMap[cat.icon];
+              const count = categoryCounts[cat.slug] || 0;
               return (
                 <Link key={cat.slug} href={`/${cat.slug}/${neighborhood.slug}`} className="card p-5 group flex items-center gap-4">
                   <div className="w-11 h-11 rounded-xl bg-apple-blue-bg flex items-center justify-center text-apple-blue shrink-0 group-hover:bg-apple-blue group-hover:text-white transition-colors">
@@ -71,7 +78,9 @@ export default async function NeighborhoodPage({ params }: { params: { slug: str
                   </div>
                   <div>
                     <p className="text-body font-semibold text-apple-black group-hover:text-apple-blue transition-colors">{cat.namePlural}</p>
-                    <p className="text-body-sm text-apple-gray-mid">in {neighborhood.name}</p>
+                    <p className="text-body-sm text-apple-gray-mid">
+                      {count > 0 ? `${count} pros in ${neighborhood.name}` : `in ${neighborhood.name}`}
+                    </p>
                   </div>
                 </Link>
               );

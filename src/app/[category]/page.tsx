@@ -14,15 +14,13 @@ import {
   CTABanner,
 } from '@/components/ui';
 
-// Revalidate every 60 minutes — new approved businesses show within an hour
+// Revalidate every 60 minutes
 export const revalidate = 3600;
 
-// Generate all category pages at build time
 export async function generateStaticParams() {
   return categories.map((cat) => ({ category: cat.slug }));
 }
 
-// Dynamic metadata
 export async function generateMetadata({
   params,
 }: {
@@ -57,7 +55,6 @@ export default async function CategoryPage({
   const tier1Neighborhoods = neighborhoods.filter((n) => n.tier === 1);
   const Icon = iconMap[category.icon];
 
-  // Schema.org markup
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'CollectionPage',
@@ -150,7 +147,7 @@ export default async function CategoryPage({
         </div>
       </section>
 
-      {/* Top Rated */}
+      {/* All Rated Businesses */}
       {allBusinesses.length > 0 && (
         <section className="section-gray">
           <div className="container-wide">
@@ -159,7 +156,7 @@ export default async function CategoryPage({
               centered={false}
             />
             <div className="space-y-4">
-              {allBusinesses.slice(0, 10).map((biz, i) => (
+              {allBusinesses.map((biz, i) => (
                 <BusinessCard key={biz.id} business={biz} rank={i + 1} />
               ))}
             </div>

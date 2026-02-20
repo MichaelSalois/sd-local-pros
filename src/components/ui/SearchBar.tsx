@@ -84,7 +84,7 @@ function Dropdown({
       </div>
 
       {isOpen && (
-        <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-2xl shadow-lg border border-black/5 z-50 max-h-60 overflow-y-auto">
+        <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-2xl shadow-lg border border-black/5 z-[100] max-h-60 overflow-y-auto">
           {filtered.length === 0 ? (
             <div className="px-4 py-3 text-sm text-apple-gray-mid">
               No results found
@@ -136,7 +136,7 @@ export default function SearchBar({ categories, neighborhoods }: SearchBarProps)
   }
 
   return (
-    <div className="max-w-2xl mx-auto mb-8" onKeyDown={handleKeyDown}>
+    <div className="max-w-2xl mx-auto mb-8 relative z-50" onKeyDown={handleKeyDown}>
       <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-0 bg-white rounded-2xl sm:rounded-button shadow-card border border-black/5 p-3 sm:p-2 sm:pl-5 focus-within:shadow-card-hover focus-within:border-apple-blue/30 transition-all">
         {/* Category Picker */}
         <div className="flex-1 min-w-0 px-2 sm:px-0">
