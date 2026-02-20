@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import { categories, getCategory } from '@/data/categories';
 import { neighborhoods } from '@/data/neighborhoods';
-import { getBusinessesByCategory } from '@/lib/supabase';
+import { getBusinessesByCategory, getAllBusinesses } from '@/lib/supabase';
 import { iconMap } from '@/lib/utils';
 import {
   Breadcrumbs,
@@ -54,6 +54,21 @@ export default async function CategoryPage({
   const allBusinesses = await getBusinessesByCategory(category.slug);
   const tier1Neighborhoods = neighborhoods.filter((n) => n.tier === 1);
   const Icon = iconMap[category.icon];
+
+  // Count businesses per neighborhood for this category (from all businesses, not deduplicated)
+  // We need the full list including duplicates across neighborhoods for accurate per-neighborhood counts
+  const { data: categoryRows } = await (await import('@/lib/supabase')).supabase
+    .from('businesses')
+    .select('neighborhood_slug')
+    .eq('status', 'approved')
+    .eq('category_slug', category.slug);
+
+  const neighborhoodCounts: Record<string, number> = {};
+  if (categoryRows) {
+    for (const row of categoryRows) {
+      neighborhoodCounts[row.neighborhood_slug] = (neighborhoodCounts[row.neighborhood_slug] || 0) + 1;
+    }
+  }
 
   const jsonLd = {
     '@context': 'https://schema.org',
@@ -129,20 +144,23 @@ export default async function CategoryPage({
           />
 
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3">
-            {tier1Neighborhoods.map((n) => (
-              <Link
-                key={n.slug}
-                href={`/${category.slug}/${n.slug}`}
-                className="card p-4 group text-center hover:border-apple-blue/20"
-              >
-                <p className="text-body font-medium text-apple-black group-hover:text-apple-blue transition-colors">
-                  {n.name}
-                </p>
-                <p className="text-caption text-apple-gray-mid mt-1">
-                  {category.namePlural}
-                </p>
-              </Link>
-            ))}
+            {tier1Neighborhoods.map((n) => {
+              const count = neighborhoodCounts[n.slug] || 0;
+              return (
+                <Link
+                  key={n.slug}
+                  href={`/${category.slug}/${n.slug}`}
+                  className="card p-4 group text-center hover:border-apple-blue/20"
+                >
+                  <p className="text-body font-medium text-apple-black group-hover:text-apple-blue transition-colors">
+                    {n.name}
+                  </p>
+                  <p className="text-caption text-apple-gray-mid mt-1">
+                    {count > 0 ? `${count} ${category.namePlural}` : category.namePlural}
+                  </p>
+                </Link>
+              );
+            })}
           </div>
         </div>
       </section>
