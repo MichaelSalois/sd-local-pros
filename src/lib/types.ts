@@ -61,6 +61,8 @@ export interface Business {
   isClaimed: boolean;
   isFeatured: boolean;
   isVerified: boolean;
+  promoText?: string;
+  promoSubtext?: string;
   createdAt: string;
   updatedAt: string;
 }

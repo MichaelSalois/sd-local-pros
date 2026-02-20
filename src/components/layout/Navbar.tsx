@@ -84,7 +84,7 @@ export default function Navbar() {
           {/* Desktop CTA */}
           <div className="hidden lg:flex items-center gap-4">
             <Link href="/claim" className="btn-ghost text-body-sm">
-              List Your Business
+              Claim Your Business
             </Link>
             <Link href="/add-business" className="btn-primary text-body-sm !py-2 !px-5">
               Add a Business
@@ -148,7 +148,7 @@ export default function Navbar() {
                 className="btn-secondary w-full text-center text-body-sm"
                 onClick={() => setMobileOpen(false)}
               >
-                List Your Business
+                Claim Your Business
               </Link>
               <Link
                 href="/add-business"

@@ -1,4 +1,4 @@
-import { Star, Phone, Globe, MapPin, Shield, Award, ChevronRight } from 'lucide-react';
+import { Star, Phone, Globe, MapPin, Shield, Award, ChevronRight, CheckCircle2, Tag, UserCheck } from 'lucide-react';
 import Link from 'next/link';
 import { Business } from '@/lib/types';
 
@@ -26,9 +26,175 @@ export function StarRating({ rating, size = 'md' }: { rating: number; size?: 'sm
 }
 
 // ============================================================
-// Business Card
+// Business Card — Featured + Regular
 // ============================================================
 export function BusinessCard({ business, rank }: { business: Business; rank?: number }) {
+  if (business.isFeatured) {
+    return <FeaturedBusinessCard business={business} rank={rank} />;
+  }
+  return <RegularBusinessCard business={business} rank={rank} />;
+}
+
+// ---- Featured Card ----
+function FeaturedBusinessCard({ business, rank }: { business: Business; rank?: number }) {
+  return (
+    <div className="rounded-2xl border-2 border-apple-blue overflow-hidden shadow-[0_2px_20px_rgba(0,122,255,0.08),0_1px_3px_rgba(0,0,0,0.04)]">
+      {/* Featured Banner */}
+      <div className="bg-gradient-to-r from-apple-blue to-[#0055D4] px-6 py-2.5 flex items-center gap-2 text-white">
+        <Star className="w-3.5 h-3.5 fill-white" />
+        <span className="text-caption font-semibold tracking-wide uppercase">Featured Pro</span>
+      </div>
+
+      <div className="bg-white p-6 flex flex-col sm:flex-row gap-5">
+        {/* Rank Badge */}
+        {rank && (
+          <div className="shrink-0 flex items-start">
+            <span className="w-10 h-10 rounded-full bg-apple-blue flex items-center justify-center text-body font-semibold text-white">
+              {rank}
+            </span>
+          </div>
+        )}
+
+        {/* Content */}
+        <div className="flex-1 min-w-0">
+          <div className="flex items-start justify-between gap-4 mb-2">
+            <h3 className="text-subtitle text-apple-black truncate">
+              {business.website ? (
+                <a href={business.website} target="_blank" rel="noopener noreferrer" className="hover:text-apple-blue transition-colors">
+                  {business.name}
+                </a>
+              ) : (
+                business.name
+              )}
+            </h3>
+          </div>
+
+          {/* Rating */}
+          <div className="flex items-center gap-2 mb-3">
+            <StarRating rating={business.rating} />
+            <span className="text-body-sm font-medium text-apple-black">{business.rating}</span>
+            <span className="text-body-sm text-apple-gray-mid">
+              ({business.reviewCount} reviews)
+            </span>
+          </div>
+
+          {/* Badges */}
+          <div className="flex flex-wrap gap-2 mb-3">
+            {business.isVerified && (
+              <span className="inline-flex items-center gap-1 px-2.5 py-1 bg-green-50 text-green-700 text-caption font-medium rounded-full">
+                <CheckCircle2 className="w-3 h-3" /> Verified
+              </span>
+            )}
+            {business.isClaimed && (
+              <span className="inline-flex items-center gap-1 px-2.5 py-1 bg-blue-50 text-blue-700 text-caption font-medium rounded-full">
+                <UserCheck className="w-3 h-3" /> Owner Claimed
+              </span>
+            )}
+          </div>
+
+          {/* Description */}
+          {business.description && (
+            <p className="text-body-sm text-apple-gray-dark mb-3 line-clamp-3">
+              {business.description}
+            </p>
+          )}
+
+          {/* Promo Banner */}
+          {business.promoText && (
+            <div className="bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200 rounded-xl p-3.5 flex items-center gap-3 mb-4">
+              <div className="w-9 h-9 rounded-lg bg-amber-500 flex items-center justify-center text-white shrink-0">
+                <Tag className="w-4 h-4" />
+              </div>
+              <div>
+                <p className="text-body-sm font-semibold text-orange-800">
+                  {business.promoText}
+                </p>
+                {business.promoSubtext && (
+                  <p className="text-caption text-orange-700 mt-0.5">
+                    {business.promoSubtext}
+                  </p>
+                )}
+              </div>
+            </div>
+          )}
+
+          {/* Services Tags */}
+          {business.services && business.services.length > 0 && (
+            <div className="flex flex-wrap gap-1.5 mb-4">
+              {business.services.slice(0, 4).map((service) => (
+                <span
+                  key={service}
+                  className="px-2.5 py-1 bg-apple-gray-bg text-apple-gray-dark text-caption rounded-full"
+                >
+                  {service}
+                </span>
+              ))}
+              {business.services.length > 4 && (
+                <span className="px-2.5 py-1 text-apple-gray-mid text-caption">
+                  +{business.services.length - 4} more
+                </span>
+              )}
+            </div>
+          )}
+
+          {/* Meta Info */}
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5 text-body-sm text-apple-gray-dark">
+            <span className="flex items-center gap-1.5">
+              <MapPin className="w-3.5 h-3.5 text-apple-gray-mid" />
+              {business.city}, {business.state} {business.zipCode}
+            </span>
+            <span className="flex items-center gap-1.5">
+              <Phone className="w-3.5 h-3.5 text-apple-gray-mid" />
+              {business.phone}
+            </span>
+            {business.website && (
+              <a
+                href={business.website}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-1.5 text-apple-blue hover:underline"
+              >
+                <Globe className="w-3.5 h-3.5" />
+                {business.website.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '')}
+              </a>
+            )}
+            {business.license && (
+              <span className="flex items-center gap-1.5">
+                <Shield className="w-3.5 h-3.5 text-green-600" />
+                Licensed
+              </span>
+            )}
+          </div>
+        </div>
+
+        {/* Actions */}
+        <div className="shrink-0 flex flex-row sm:flex-col gap-2 sm:items-end sm:justify-center">
+          <a
+            href={`tel:${business.phone.replace(/\D/g, '')}`}
+            className="btn-primary text-body-sm !py-2 !px-5"
+          >
+            <Phone className="w-4 h-4 mr-1.5" />
+            Call Now
+          </a>
+          {business.website && (
+            <a
+              href={business.website}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-secondary text-body-sm !py-2 !px-5"
+            >
+              <Globe className="w-4 h-4 mr-1.5" />
+              Website
+            </a>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ---- Regular Card ----
+function RegularBusinessCard({ business, rank }: { business: Business; rank?: number }) {
   return (
     <div className="card p-6 flex flex-col sm:flex-row gap-5">
       {/* Rank Badge */}
@@ -44,11 +210,6 @@ export function BusinessCard({ business, rank }: { business: Business; rank?: nu
       <div className="flex-1 min-w-0">
         <div className="flex items-start justify-between gap-4 mb-2">
           <h3 className="text-subtitle text-apple-black truncate">{business.name}</h3>
-          {business.isFeatured && (
-            <span className="shrink-0 inline-flex items-center gap-1 px-2.5 py-1 bg-amber-50 text-amber-700 text-caption font-medium rounded-full">
-              <Award className="w-3 h-3" /> Featured
-            </span>
-          )}
         </div>
 
         {/* Rating */}
@@ -59,6 +220,22 @@ export function BusinessCard({ business, rank }: { business: Business; rank?: nu
             ({business.reviewCount} reviews)
           </span>
         </div>
+
+        {/* Badges for claimed (non-featured) businesses */}
+        {(business.isVerified || business.isClaimed) && (
+          <div className="flex flex-wrap gap-2 mb-3">
+            {business.isVerified && (
+              <span className="inline-flex items-center gap-1 px-2.5 py-1 bg-green-50 text-green-700 text-caption font-medium rounded-full">
+                <CheckCircle2 className="w-3 h-3" /> Verified
+              </span>
+            )}
+            {business.isClaimed && (
+              <span className="inline-flex items-center gap-1 px-2.5 py-1 bg-blue-50 text-blue-700 text-caption font-medium rounded-full">
+                <UserCheck className="w-3 h-3" /> Owner Claimed
+              </span>
+            )}
+          </div>
+        )}
 
         {/* Description */}
         {business.description && (

@@ -38,6 +38,8 @@ interface BusinessRow {
   is_claimed: boolean;
   is_featured: boolean;
   is_verified: boolean;
+  promo_text: string | null;
+  promo_subtext: string | null;
   status: string;
   created_at: string;
   updated_at: string;
@@ -72,9 +74,23 @@ function rowToBusiness(row: BusinessRow): Business {
     isClaimed: row.is_claimed,
     isFeatured: row.is_featured,
     isVerified: row.is_verified,
+    promoText: row.promo_text || undefined,
+    promoSubtext: row.promo_subtext || undefined,
     createdAt: row.created_at,
     updatedAt: row.updated_at,
   };
+}
+
+// ============================================================
+// Sort helper: Featured first, then by review count
+// ============================================================
+
+function sortFeaturedFirst(businesses: Business[]): Business[] {
+  return businesses.sort((a, b) => {
+    if (a.isFeatured && !b.isFeatured) return -1;
+    if (!a.isFeatured && b.isFeatured) return 1;
+    return b.reviewCount - a.reviewCount;
+  });
 }
 
 // ============================================================
@@ -92,7 +108,7 @@ export async function getAllBusinesses(): Promise<Business[]> {
     console.error('Error fetching businesses:', error);
     return [];
   }
-  return (data as BusinessRow[]).map(rowToBusiness);
+  return sortFeaturedFirst((data as BusinessRow[]).map(rowToBusiness));
 }
 
 export async function getBusinessesByCategory(categorySlug: string): Promise<Business[]> {
@@ -115,7 +131,7 @@ export async function getBusinessesByCategory(categorySlug: string): Promise<Bus
     return true;
   });
 
-  return unique.map(rowToBusiness);
+  return sortFeaturedFirst(unique.map(rowToBusiness));
 }
 
 export async function getBusinessesByNeighborhood(neighborhoodSlug: string): Promise<Business[]> {
@@ -130,7 +146,7 @@ export async function getBusinessesByNeighborhood(neighborhoodSlug: string): Pro
     console.error('Error fetching businesses by neighborhood:', error);
     return [];
   }
-  return (data as BusinessRow[]).map(rowToBusiness);
+  return sortFeaturedFirst((data as BusinessRow[]).map(rowToBusiness));
 }
 
 export async function getBusinessesByCategoryAndNeighborhood(
@@ -149,7 +165,7 @@ export async function getBusinessesByCategoryAndNeighborhood(
     console.error('Error fetching businesses by category+neighborhood:', error);
     return [];
   }
-  return (data as BusinessRow[]).map(rowToBusiness);
+  return sortFeaturedFirst((data as BusinessRow[]).map(rowToBusiness));
 }
 
 export async function submitBusinessListing(data: {
