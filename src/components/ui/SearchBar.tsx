@@ -119,6 +119,12 @@ export default function SearchBar({ categories, neighborhoods }: SearchBarProps)
   const [selectedCategory, setSelectedCategory] = useState('');
   const [selectedNeighborhood, setSelectedNeighborhood] = useState('');
 
+  // Sort neighborhoods alphabetically, keep categories in popularity order
+  const sortedNeighborhoods = useMemo(
+    () => [...neighborhoods].sort((a, b) => a.label.localeCompare(b.label)),
+    [neighborhoods]
+  );
+
   function handleSearch() {
     if (selectedCategory && selectedNeighborhood) {
       router.push(`/${selectedCategory}/${selectedNeighborhood}`);
@@ -138,7 +144,7 @@ export default function SearchBar({ categories, neighborhoods }: SearchBarProps)
   return (
     <div className="max-w-2xl mx-auto mb-8 relative z-50" onKeyDown={handleKeyDown}>
       <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-0 bg-white rounded-2xl sm:rounded-button shadow-card border border-black/5 p-3 sm:p-2 sm:pl-5 focus-within:shadow-card-hover focus-within:border-apple-blue/30 transition-all">
-        {/* Category Picker */}
+        {/* Category Picker — popularity order */}
         <div className="flex-1 min-w-0 px-2 sm:px-0">
           <Dropdown
             options={categories}
@@ -152,10 +158,10 @@ export default function SearchBar({ categories, neighborhoods }: SearchBarProps)
         {/* Divider */}
         <div className="hidden sm:block w-px h-6 bg-black/10 mx-3 shrink-0" />
 
-        {/* Neighborhood Picker */}
+        {/* Neighborhood Picker — alphabetical */}
         <div className="flex-1 min-w-0 px-2 sm:px-0">
           <Dropdown
-            options={neighborhoods}
+            options={sortedNeighborhoods}
             value={selectedNeighborhood}
             onChange={setSelectedNeighborhood}
             placeholder="Your neighborhood"

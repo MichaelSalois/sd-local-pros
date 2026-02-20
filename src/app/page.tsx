@@ -44,8 +44,8 @@ export default async function HomePage() {
       {/* ============================================ */}
       {/* HERO SECTION */}
       {/* ============================================ */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-apple-blue-bg/40 via-white to-white pt-20 pb-16 lg:pt-32 lg:pb-24">
-        {/* Subtle background decoration */}
+      <section className="relative bg-gradient-to-b from-apple-blue-bg/40 via-white to-white pt-20 pb-16 lg:pt-32 lg:pb-24">
+        {/* Subtle background decoration — moved inside a clipped container so blurs don't overflow but dropdown can */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="absolute -top-40 -right-40 w-[600px] h-[600px] bg-apple-blue/5 rounded-full blur-3xl" />
           <div className="absolute -bottom-20 -left-20 w-[400px] h-[400px] bg-apple-blue/3 rounded-full blur-3xl" />
