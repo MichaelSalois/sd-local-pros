@@ -1,33 +1,7 @@
 import { Star, Phone, Globe, MapPin, Shield, Award, ChevronRight, CheckCircle2, Tag, UserCheck } from 'lucide-react';
 import Link from 'next/link';
 import { Business } from '@/lib/types';
-
-// ============================================================
-// GA4 + Meta Pixel Event Helper
-// ============================================================
-function trackEvent(eventName: string, params: Record<string, string>) {
-  if (typeof window === 'undefined') return;
-
-  // GA4
-  if (typeof (window as any).gtag === 'function') {
-    (window as any).gtag('event', eventName, params);
-  }
-
-  // Meta Pixel
-  if (typeof (window as any).fbq === 'function') {
-    if (eventName === 'call_now_click') {
-      (window as any).fbq('track', 'Contact', {
-        content_name: params.business_name,
-        content_category: params.category,
-      });
-    } else if (eventName === 'website_click') {
-      (window as any).fbq('trackCustom', 'WebsiteClick', {
-        content_name: params.business_name,
-        content_category: params.category,
-      });
-    }
-  }
-}
+import { TrackedCallButton, TrackedWebsiteButton } from './tracking-buttons';
 
 // ============================================================
 // Star Rating
@@ -196,39 +170,23 @@ function FeaturedBusinessCard({ business, rank }: { business: Business; rank?: n
 
         {/* Actions */}
         <div className="shrink-0 flex flex-row sm:flex-col gap-2 sm:items-end sm:justify-center">
-          <a
-            href={`tel:${business.phone.replace(/\D/g, '')}`}
-            className="btn-primary text-body-sm !py-2 !px-5"
-            onClick={() => trackEvent('call_now_click', {
-              business_name: business.name,
-              business_id: business.id,
-              category: business.categorySlug,
-              neighborhood: business.neighborhoodSlug,
-              phone: business.phone,
-              is_featured: 'true',
-            })}
-          >
-            <Phone className="w-4 h-4 mr-1.5" />
-            Call Now
-          </a>
+          <TrackedCallButton
+            phone={business.phone}
+            businessName={business.name}
+            businessId={business.id}
+            category={business.categorySlug}
+            neighborhood={business.neighborhoodSlug}
+            isFeatured={true}
+          />
           {business.website && (
-            <a
-              href={business.website}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-secondary text-body-sm !py-2 !px-5"
-              onClick={() => trackEvent('website_click', {
-                business_name: business.name,
-                business_id: business.id,
-                category: business.categorySlug,
-                neighborhood: business.neighborhoodSlug,
-                website: business.website!,
-                is_featured: 'true',
-              })}
-            >
-              <Globe className="w-4 h-4 mr-1.5" />
-              Website
-            </a>
+            <TrackedWebsiteButton
+              website={business.website}
+              businessName={business.name}
+              businessId={business.id}
+              category={business.categorySlug}
+              neighborhood={business.neighborhoodSlug}
+              isFeatured={true}
+            />
           )}
         </div>
       </div>
@@ -327,39 +285,23 @@ function RegularBusinessCard({ business, rank }: { business: Business; rank?: nu
 
       {/* Actions */}
       <div className="shrink-0 flex flex-row sm:flex-col gap-2 sm:items-end sm:justify-center">
-        <a
-          href={`tel:${business.phone.replace(/\D/g, '')}`}
-          className="btn-primary text-body-sm !py-2 !px-5"
-          onClick={() => trackEvent('call_now_click', {
-            business_name: business.name,
-            business_id: business.id,
-            category: business.categorySlug,
-            neighborhood: business.neighborhoodSlug,
-            phone: business.phone,
-            is_featured: 'false',
-          })}
-        >
-          <Phone className="w-4 h-4 mr-1.5" />
-          Call Now
-        </a>
+        <TrackedCallButton
+          phone={business.phone}
+          businessName={business.name}
+          businessId={business.id}
+          category={business.categorySlug}
+          neighborhood={business.neighborhoodSlug}
+          isFeatured={false}
+        />
         {business.website && (
-          <a
-            href={business.website}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn-secondary text-body-sm !py-2 !px-5"
-            onClick={() => trackEvent('website_click', {
-              business_name: business.name,
-              business_id: business.id,
-              category: business.categorySlug,
-              neighborhood: business.neighborhoodSlug,
-              website: business.website!,
-              is_featured: 'false',
-            })}
-          >
-            <Globe className="w-4 h-4 mr-1.5" />
-            Website
-          </a>
+          <TrackedWebsiteButton
+            website={business.website}
+            businessName={business.name}
+            businessId={business.id}
+            category={business.categorySlug}
+            neighborhood={business.neighborhoodSlug}
+            isFeatured={false}
+          />
         )}
       </div>
     </div>
