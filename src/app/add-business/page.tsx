@@ -4,7 +4,17 @@ import { useState } from 'react';
 import { Breadcrumbs } from '@/components/ui';
 import { categories } from '@/data/categories';
 import { neighborhoods } from '@/data/neighborhoods';
-import { CheckCircle2 } from 'lucide-react';
+import {
+  CheckCircle2,
+  Star,
+  TrendingUp,
+  BadgeCheck,
+  Globe,
+  Megaphone,
+  ArrowRight,
+  Sparkles,
+  Crown,
+} from 'lucide-react';
 
 export default function AddBusinessPage() {
   const [submitted, setSubmitted] = useState(false);
@@ -48,6 +58,7 @@ export default function AddBusinessPage() {
 
   return (
     <>
+      {/* Hero */}
       <section className="bg-gradient-to-b from-apple-blue-bg/30 to-white pt-12 pb-12">
         <div className="container-tight">
           <Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: 'Add a Business' }]} />
@@ -58,6 +69,7 @@ export default function AddBusinessPage() {
         </div>
       </section>
 
+      {/* Form */}
       <section className="section-white">
         <div className="container-tight max-w-2xl">
           <form onSubmit={handleSubmit} className="space-y-6">
@@ -128,6 +140,128 @@ export default function AddBusinessPage() {
               </p>
             </div>
           </form>
+        </div>
+      </section>
+
+      {/* ── Why Go Featured? ── */}
+      <section className="section-gray !py-16">
+        <div className="container-tight">
+          {/* Section Header */}
+          <div className="text-center mb-12">
+            <div className="inline-flex items-center gap-2 bg-apple-blue/10 text-apple-blue text-body-sm font-semibold px-4 py-1.5 rounded-full mb-4">
+              <Crown className="w-4 h-4" />
+              Featured Pro
+            </div>
+            <h2 className="text-title lg:text-headline-mobile text-apple-black mb-3">
+              Want to Stand Out?
+            </h2>
+            <p className="text-body-lg text-apple-gray-dark max-w-xl mx-auto">
+              Featured Pros get seen first, build trust faster, and win more jobs. Here&apos;s what you get.
+            </p>
+          </div>
+
+          {/* Benefits Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+            {[
+              {
+                icon: TrendingUp,
+                title: 'Listed First',
+                desc: 'Your business appears at the top of every category and neighborhood page you serve — above all other listings.',
+              },
+              {
+                icon: BadgeCheck,
+                title: 'Verified & Claimed Badges',
+                desc: 'Stand out with trust badges that show homeowners you\'re a legitimate, verified professional.',
+              },
+              {
+                icon: Megaphone,
+                title: 'Promo Banner',
+                desc: 'Highlight a special offer, seasonal deal, or unique selling point directly on your listing card.',
+              },
+              {
+                icon: Globe,
+                title: 'Website Link Button',
+                desc: 'Drive traffic straight to your website with a prominent button on your featured listing.',
+              },
+              {
+                icon: Star,
+                title: 'Blue Featured Badge',
+                desc: 'An eye-catching blue "Featured Pro" banner makes your listing impossible to scroll past.',
+              },
+              {
+                icon: Sparkles,
+                title: 'Premium Visibility',
+                desc: 'Featured listings are highlighted with a blue border and enhanced card design that grabs attention.',
+              },
+            ].map((b) => (
+              <div key={b.title} className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+                <div className="w-10 h-10 rounded-xl bg-apple-blue-bg flex items-center justify-center text-apple-blue mb-4">
+                  <b.icon className="w-5 h-5" />
+                </div>
+                <h3 className="text-body font-semibold text-apple-black mb-1.5">{b.title}</h3>
+                <p className="text-body-sm text-apple-gray-dark leading-relaxed">{b.desc}</p>
+              </div>
+            ))}
+          </div>
+
+          {/* Featured Listing Preview Card */}
+          <div className="max-w-lg mx-auto mb-12">
+            <p className="text-body-sm font-medium text-apple-gray-mid text-center mb-3 uppercase tracking-wide">
+              What a Featured Listing Looks Like
+            </p>
+            <div className="rounded-2xl border-2 border-apple-blue bg-white shadow-md overflow-hidden">
+              {/* Featured Banner */}
+              <div className="bg-apple-blue text-white text-center text-body-sm font-semibold py-1.5 tracking-wide">
+                ⭐ FEATURED PRO
+              </div>
+              <div className="p-5">
+                <div className="flex items-start justify-between mb-3">
+                  <div>
+                    <div className="flex items-center gap-2 mb-1">
+                      <h4 className="text-body font-semibold text-apple-black">Your Business Name</h4>
+                      <BadgeCheck className="w-4 h-4 text-apple-blue" />
+                    </div>
+                    <p className="text-body-sm text-apple-gray-dark">Your Neighborhood, San Diego</p>
+                  </div>
+                  <div className="flex items-center gap-1 text-amber-500">
+                    <Star className="w-4 h-4 fill-current" />
+                    <span className="text-body-sm font-medium text-apple-black">4.9</span>
+                    <span className="text-body-sm text-apple-gray-mid">(127)</span>
+                  </div>
+                </div>
+                {/* Promo Banner */}
+                <div className="bg-apple-blue-bg rounded-lg px-3 py-2 mb-3">
+                  <p className="text-body-sm font-semibold text-apple-blue">🎉 $50 Off First Service</p>
+                  <p className="text-body-sm text-apple-gray-dark">New customers — mention SD Local Pros</p>
+                </div>
+                <div className="flex items-center gap-3">
+                  <span className="btn-primary !py-1.5 !px-4 !text-body-sm pointer-events-none">Visit Website</span>
+                  <span className="text-body-sm text-apple-gray-dark">(619) 555-0100</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Pricing CTA */}
+          <div className="text-center">
+            <div className="inline-block bg-white rounded-2xl shadow-sm border border-gray-100 px-8 py-6">
+              <p className="text-body-sm text-apple-gray-mid mb-1">Founding Rate — Limited Spots</p>
+              <div className="flex items-baseline justify-center gap-1 mb-1">
+                <span className="text-4xl font-bold text-apple-black">$25</span>
+                <span className="text-body-lg text-apple-gray-dark">/month</span>
+              </div>
+              <p className="text-body-sm text-apple-gray-mid mb-4">
+                Locked in forever. Price goes up to $50–$200/mo.
+              </p>
+              <a
+                href="/claim"
+                className="btn-primary inline-flex items-center gap-2"
+              >
+                Become a Featured Pro
+                <ArrowRight className="w-4 h-4" />
+              </a>
+            </div>
+          </div>
         </div>
       </section>
     </>
