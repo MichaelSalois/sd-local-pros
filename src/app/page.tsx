@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Search, ArrowRight, CheckCircle2 } from 'lucide-react';
+import { ArrowRight, CheckCircle2 } from 'lucide-react';
 import { categories } from '@/data/categories';
 import { neighborhoods } from '@/data/neighborhoods';
 import { businesses } from '@/data/businesses';
@@ -10,6 +10,7 @@ import {
   NeighborhoodCard,
   CTABanner,
 } from '@/components/ui';
+import SearchBar from '@/components/ui/SearchBar';
 
 export default function HomePage() {
   // Top categories for display
@@ -20,6 +21,16 @@ export default function HomePage() {
   const totalBusinesses = businesses.length;
   const totalNeighborhoods = neighborhoods.length;
   const totalCategories = categories.length;
+
+  // Prepare search options (server-side, passed as props to client component)
+  const categoryOptions = topCategories.map((c) => ({
+    slug: c.slug,
+    label: c.namePlural,
+  }));
+  const neighborhoodOptions = neighborhoods.map((n) => ({
+    slug: n.slug,
+    label: n.name,
+  }));
 
   return (
     <>
@@ -46,19 +57,10 @@ export default function HomePage() {
             </p>
 
             {/* Search Bar */}
-            <div className="max-w-xl mx-auto mb-8">
-              <div className="flex items-center gap-2 bg-white rounded-button shadow-card border border-black/5 p-2 pl-5 focus-within:shadow-card-hover focus-within:border-apple-blue/30 transition-all">
-                <Search className="w-5 h-5 text-apple-gray-mid shrink-0" />
-                <input
-                  type="text"
-                  placeholder="What do you need? (e.g. plumber, electrician...)"
-                  className="flex-1 text-body text-apple-black placeholder:text-apple-gray-mid border-0 outline-none bg-transparent"
-                />
-                <button className="btn-primary !rounded-button text-body-sm !py-2.5 !px-6 shrink-0">
-                  Search
-                </button>
-              </div>
-            </div>
+            <SearchBar
+              categories={categoryOptions}
+              neighborhoods={neighborhoodOptions}
+            />
 
             {/* Quick Links */}
             <div className="flex flex-wrap items-center justify-center gap-3 text-body-sm">
