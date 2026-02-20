@@ -3,6 +3,16 @@ const nextConfig = {
   images: {
     domains: ['maps.googleapis.com'],
   },
+  async redirects() {
+    return [
+      {
+        source: '/:path*',
+        has: [{ type: 'host', value: 'sdlocalpros.com' }],
+        destination: 'https://www.sdlocalpros.com/:path*',
+        permanent: true,
+      },
+    ];
+  },
   async headers() {
     return [
       {
