@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { ArrowRight, CheckCircle2 } from 'lucide-react';
 import { categories } from '@/data/categories';
 import { neighborhoods } from '@/data/neighborhoods';
-import { businesses } from '@/data/businesses';
+import { getAllBusinesses } from '@/lib/supabase';
 import { iconMap } from '@/lib/utils';
 import {
   SectionHeader,
@@ -12,17 +12,24 @@ import {
 } from '@/components/ui';
 import SearchBar from '@/components/ui/SearchBar';
 
-export default function HomePage() {
+// Revalidate every 60 minutes
+export const revalidate = 3600;
+
+export default async function HomePage() {
   // Top categories for display
   const topCategories = categories.filter((c) => c.tier === 1);
   // Top neighborhoods for display
   const topNeighborhoods = neighborhoods.slice(0, 12);
+
+  // Fetch all businesses from Supabase
+  const businesses = await getAllBusinesses();
+
   // Stats
   const totalBusinesses = businesses.length;
   const totalNeighborhoods = neighborhoods.length;
   const totalCategories = categories.length;
 
-  // Prepare search options (server-side, passed as props to client component)
+  // Prepare search options
   const categoryOptions = topCategories.map((c) => ({
     slug: c.slug,
     label: c.namePlural,

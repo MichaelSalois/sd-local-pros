@@ -4,13 +4,16 @@ import Link from 'next/link';
 import { MapPin, DollarSign, ArrowRight } from 'lucide-react';
 import { categories, getCategory } from '@/data/categories';
 import { neighborhoods, getNeighborhood } from '@/data/neighborhoods';
-import { getBusinessesByCategoryAndNeighborhood, getBusinessesByCategory } from '@/data/businesses';
+import { getBusinessesByCategoryAndNeighborhood } from '@/lib/supabase';
 import {
   Breadcrumbs,
   BusinessCard,
   FAQSection,
   CTABanner,
 } from '@/components/ui';
+
+// Revalidate every 60 minutes
+export const revalidate = 3600;
 
 // Generate ALL category+neighborhood combos at build time = programmatic SEO
 export async function generateStaticParams() {
@@ -50,7 +53,7 @@ export async function generateMetadata({
   };
 }
 
-export default function ServiceNeighborhoodPage({
+export default async function ServiceNeighborhoodPage({
   params,
 }: {
   params: { category: string; neighborhood: string };
@@ -60,17 +63,18 @@ export default function ServiceNeighborhoodPage({
   if (!category || !neighborhood) notFound();
 
   // Get businesses for this exact combo
-  const exactBusinesses = getBusinessesByCategoryAndNeighborhood(
+  const exactBusinesses = await getBusinessesByCategoryAndNeighborhood(
     category.slug,
     neighborhood.slug
   );
 
   // Get nearby businesses (same category, adjacent neighborhoods)
-  const nearbyBusinesses = neighborhood.adjacentNeighborhoods
-    .flatMap((adjSlug) =>
+  const nearbyResults = await Promise.all(
+    neighborhood.adjacentNeighborhoods.map((adjSlug) =>
       getBusinessesByCategoryAndNeighborhood(category.slug, adjSlug)
     )
-    .slice(0, 5);
+  );
+  const nearbyBusinesses = nearbyResults.flat().slice(0, 5);
 
   const allBusinesses = [...exactBusinesses, ...nearbyBusinesses];
 

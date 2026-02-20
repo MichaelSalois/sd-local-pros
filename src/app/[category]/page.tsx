@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import { categories, getCategory } from '@/data/categories';
 import { neighborhoods } from '@/data/neighborhoods';
-import { getBusinessesByCategory } from '@/data/businesses';
+import { getBusinessesByCategory } from '@/lib/supabase';
 import { iconMap } from '@/lib/utils';
 import {
   Breadcrumbs,
@@ -13,6 +13,9 @@ import {
   FAQSection,
   CTABanner,
 } from '@/components/ui';
+
+// Revalidate every 60 minutes — new approved businesses show within an hour
+export const revalidate = 3600;
 
 // Generate all category pages at build time
 export async function generateStaticParams() {
@@ -42,7 +45,7 @@ export async function generateMetadata({
   };
 }
 
-export default function CategoryPage({
+export default async function CategoryPage({
   params,
 }: {
   params: { category: string };
@@ -50,7 +53,7 @@ export default function CategoryPage({
   const category = getCategory(params.category);
   if (!category) notFound();
 
-  const allBusinesses = getBusinessesByCategory(category.slug);
+  const allBusinesses = await getBusinessesByCategory(category.slug);
   const tier1Neighborhoods = neighborhoods.filter((n) => n.tier === 1);
   const Icon = iconMap[category.icon];
 

@@ -3,9 +3,12 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { neighborhoods, getNeighborhood } from '@/data/neighborhoods';
 import { categories } from '@/data/categories';
-import { getBusinessesByNeighborhood } from '@/data/businesses';
+import { getBusinessesByNeighborhood } from '@/lib/supabase';
 import { iconMap } from '@/lib/utils';
 import { Breadcrumbs, BusinessCard, CategoryCard, CTABanner } from '@/components/ui';
+
+// Revalidate every 60 minutes
+export const revalidate = 3600;
 
 export async function generateStaticParams() {
   return neighborhoods.map((n) => ({ slug: n.slug }));
@@ -23,11 +26,11 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   };
 }
 
-export default function NeighborhoodPage({ params }: { params: { slug: string } }) {
+export default async function NeighborhoodPage({ params }: { params: { slug: string } }) {
   const neighborhood = getNeighborhood(params.slug);
   if (!neighborhood) notFound();
 
-  const allBusinesses = getBusinessesByNeighborhood(neighborhood.slug);
+  const allBusinesses = await getBusinessesByNeighborhood(neighborhood.slug);
   const tier1Categories = categories.filter((c) => c.tier === 1);
 
   return (
