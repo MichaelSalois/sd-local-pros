@@ -3,6 +3,33 @@ import Link from 'next/link';
 import { Business } from '@/lib/types';
 
 // ============================================================
+// GA4 + Meta Pixel Event Helper
+// ============================================================
+function trackEvent(eventName: string, params: Record<string, string>) {
+  if (typeof window === 'undefined') return;
+
+  // GA4
+  if (typeof (window as any).gtag === 'function') {
+    (window as any).gtag('event', eventName, params);
+  }
+
+  // Meta Pixel
+  if (typeof (window as any).fbq === 'function') {
+    if (eventName === 'call_now_click') {
+      (window as any).fbq('track', 'Contact', {
+        content_name: params.business_name,
+        content_category: params.category,
+      });
+    } else if (eventName === 'website_click') {
+      (window as any).fbq('trackCustom', 'WebsiteClick', {
+        content_name: params.business_name,
+        content_category: params.category,
+      });
+    }
+  }
+}
+
+// ============================================================
 // Star Rating
 // ============================================================
 export function StarRating({ rating, size = 'md' }: { rating: number; size?: 'sm' | 'md' | 'lg' }) {
@@ -172,6 +199,14 @@ function FeaturedBusinessCard({ business, rank }: { business: Business; rank?: n
           <a
             href={`tel:${business.phone.replace(/\D/g, '')}`}
             className="btn-primary text-body-sm !py-2 !px-5"
+            onClick={() => trackEvent('call_now_click', {
+              business_name: business.name,
+              business_id: business.id,
+              category: business.categorySlug,
+              neighborhood: business.neighborhoodSlug,
+              phone: business.phone,
+              is_featured: 'true',
+            })}
           >
             <Phone className="w-4 h-4 mr-1.5" />
             Call Now
@@ -182,6 +217,14 @@ function FeaturedBusinessCard({ business, rank }: { business: Business; rank?: n
               target="_blank"
               rel="noopener noreferrer"
               className="btn-secondary text-body-sm !py-2 !px-5"
+              onClick={() => trackEvent('website_click', {
+                business_name: business.name,
+                business_id: business.id,
+                category: business.categorySlug,
+                neighborhood: business.neighborhoodSlug,
+                website: business.website!,
+                is_featured: 'true',
+              })}
             >
               <Globe className="w-4 h-4 mr-1.5" />
               Website
@@ -287,6 +330,14 @@ function RegularBusinessCard({ business, rank }: { business: Business; rank?: nu
         <a
           href={`tel:${business.phone.replace(/\D/g, '')}`}
           className="btn-primary text-body-sm !py-2 !px-5"
+          onClick={() => trackEvent('call_now_click', {
+            business_name: business.name,
+            business_id: business.id,
+            category: business.categorySlug,
+            neighborhood: business.neighborhoodSlug,
+            phone: business.phone,
+            is_featured: 'false',
+          })}
         >
           <Phone className="w-4 h-4 mr-1.5" />
           Call Now
@@ -297,6 +348,14 @@ function RegularBusinessCard({ business, rank }: { business: Business; rank?: nu
             target="_blank"
             rel="noopener noreferrer"
             className="btn-secondary text-body-sm !py-2 !px-5"
+            onClick={() => trackEvent('website_click', {
+              business_name: business.name,
+              business_id: business.id,
+              category: business.categorySlug,
+              neighborhood: business.neighborhoodSlug,
+              website: business.website!,
+              is_featured: 'false',
+            })}
           >
             <Globe className="w-4 h-4 mr-1.5" />
             Website
