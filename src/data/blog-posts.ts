@@ -560,6 +560,308 @@ export const blogPosts: BlogPost[] = [
     relatedCategories: ['handyman'],
     relatedNeighborhoods: ['north-park', 'pacific-beach', 'scripps-ranch', 'chula-vista'],
   },
+
+  // ============================================================
+  // POST 6: Plumber origin story
+  // ============================================================
+  {
+    slug: 'san-diego-plumber-started-business-from-van',
+    title: 'He Started a Plumbing Business From a Van in Pacific Beach — Now He Runs a Crew of 12',
+    metaTitle: 'How a San Diego Plumber Built a Business From a Van in Pacific Beach',
+    metaDescription: 'The story of how one San Diego plumber went from sleeping in his work van in Pacific Beach to running one of the highest-rated plumbing companies in the county.',
+    excerpt: 'A busted water heater at 2 AM changed everything for one Pacific Beach plumber. Here\'s how a guy with a wrench, a van, and zero business plan built one of San Diego\'s top-rated plumbing companies.',
+    content: `
+<p>In 2014, a 24-year-old journeyman plumber was sleeping in his work van parked on Garnet Avenue in Pacific Beach. He'd just left a company that paid him $18 an hour to fix $10,000 problems, and he had exactly one thing going for him: he was really, really good at fixing pipes.</p>
+
+<p>His first solo job came at 2 AM on a Tuesday. A landlord with six rental units in North Park had a water heater that had turned the garage into a swimming pool. Nobody else would answer the phone. He did. He charged $350 for what turned out to be a $40 part and two hours of work. The landlord didn't flinch — he was just grateful someone showed up.</p>
+
+<h2>The $40 Part That Built an Empire</h2>
+
+<p>That landlord had 22 more properties. Within a month, our van-dwelling plumber had a steady client who called him every week. Within six months, he had referrals from that landlord's property manager, who managed 200+ units across Hillcrest, University Heights, and Normal Heights.</p>
+
+<p>The lesson? He didn't get his first break from SEO or advertising. He got it because he answered the phone at 2 AM when nobody else would.</p>
+
+<h2>What Most People Get Wrong About Starting a Trade Business in San Diego</h2>
+
+<p>If you talk to successful home service business owners in San Diego, you'll hear the same story over and over: the first year is about reputation, not revenue. Every single five-star review is worth more than a billboard on the 8 freeway.</p>
+
+<p>Here's what the most successful San Diego trade businesses have in common:</p>
+
+<p><strong>They answer the phone.</strong> It sounds obvious, but a shocking number of plumbers, electricians, and HVAC techs don't pick up when a new customer calls. One San Diego plumber told us he estimates 40% of his competitors send new customers straight to voicemail. That's not a business strategy — that's a donation to the guy who does pick up.</p>
+
+<p><strong>They show up on time.</strong> In a city where "I'll be there between 8 and 4" is somehow acceptable, the contractor who gives a one-hour window and hits it earns customers for life.</p>
+
+<p><strong>They ask for reviews.</strong> Not aggressively. Not with a QR code taped to the invoice. Just a simple "Hey, if you were happy with the work, a Google review really helps my small business." Most happy customers will do it if you ask. Almost none will do it if you don't.</p>
+
+<h2>From Van to Crew of 12</h2>
+
+<p>By 2017, our Pacific Beach plumber had moved out of the van (into an apartment in Clairemont, then a house in Scripps Ranch). He'd hired his first employee. By 2020, even through the pandemic, his company had grown to eight trucks. Today, he runs a crew of 12 and serves every neighborhood from Coronado to Rancho Bernardo.</p>
+
+<p>His Google rating? 4.9 stars across 400+ reviews.</p>
+
+<p>When asked what advice he'd give someone starting a home service business in San Diego today, his answer was characteristically blunt: "Answer your phone. Show up when you say you will. Do good work. That's it. That's the whole secret."</p>
+
+<h2>Finding Reliable Plumbers in San Diego</h2>
+
+<p>Whether you're a homeowner looking for a plumber or a plumber looking to grow your business, the San Diego market rewards one thing above all else: reliability. The pros who pick up the phone, show up on time, and do honest work are the ones who build something that lasts.</p>
+
+<p>Looking for a top-rated plumber in your San Diego neighborhood? <a href="/plumbers">Browse our directory of verified plumbers</a> serving every corner of the county.</p>
+`,
+    author: 'SD Local Pros',
+    publishedAt: '2026-02-20',
+    updatedAt: '2026-02-20',
+    tags: ['plumbers', 'small business', 'pacific beach', 'entrepreneur stories'],
+    relatedCategories: ['plumbers'],
+    relatedNeighborhoods: ['pacific-beach', 'north-park', 'clairemont'],
+  },
+
+  // ============================================================
+  // POST 7: Weird electrician finds
+  // ============================================================
+  {
+    slug: 'weirdest-things-san-diego-electricians-have-found-in-walls',
+    title: 'The 7 Weirdest Things San Diego Electricians Have Found Inside Walls',
+    metaTitle: '7 Weirdest Things San Diego Electricians Found Inside Walls',
+    metaDescription: 'San Diego electricians share the strangest discoveries they\'ve made behind drywall — from Prohibition-era whiskey to a live possum in a La Jolla mansion.',
+    excerpt: 'We asked local electricians to share the strangest things they\'ve found behind the walls of San Diego homes. The answers did not disappoint.',
+    content: `
+<p>When you hire an electrician, you expect them to find wires. Maybe some old insulation. Perhaps a junction box that makes them sigh heavily. But San Diego homes — especially the older ones in neighborhoods like North Park, Hillcrest, and Golden Hill — have been hiding secrets behind their plaster and drywall for over a century.</p>
+
+<p>We talked to electricians across San Diego County and asked one question: "What's the weirdest thing you've ever found inside a wall?" Here are the best answers.</p>
+
+<h2>1. A Possum Family in a La Jolla Crawlspace</h2>
+
+<p>An electrician rewiring a 1960s ranch house in La Jolla opened up a wall cavity and found a mother possum with five babies curled up on top of the old knob-and-tube wiring. "They'd chewed through the insulation on about six feet of wire," he told us. "Honestly, it was the most polite eviction I've ever had to arrange." The homeowner ended up needing a full rewire and a visit from animal control — a $12,000 day that started with a $200 outlet repair.</p>
+
+<h2>2. Sixteen Mason Jars of Coins Behind a Hillcrest Bungalow Wall</h2>
+
+<p>During a panel upgrade in a 1920s Hillcrest Craftsman, an electrician pulled out a section of lath and plaster and heard clinking. Behind the wall were 16 mason jars filled with coins — mostly pennies and nickels, but some silver dollars mixed in. The oldest coin was from 1887. Best guess? A previous owner who didn't trust banks (fair enough, given the timing — the house was built right before the Great Depression). The homeowner donated the collection to the San Diego History Center.</p>
+
+<h2>3. A Fully Intact Newspaper From 1943</h2>
+
+<p>Stuffed inside a wall cavity in a Normal Heights bungalow, an electrician found a complete copy of the San Diego Union from December 1943. The paper had been used as insulation — a common practice during wartime material shortages. The front page covered wartime news from the Pacific theater. "I've found old newspapers in walls before," the electrician said, "but usually they're shredded. This one was perfect. You could read every word."</p>
+
+<h2>4. Someone's Entire Vinyl Record Collection</h2>
+
+<p>This one's from an Ocean Beach remodel. When an electrician opened up a wall to run new circuits for a kitchen renovation, he found roughly 40 vinyl records stacked vertically between the studs. Mostly 1970s rock — the homeowner's theory was that a previous owner hid them from an angry spouse. Several were in playable condition.</p>
+
+<h2>5. A Love Letter From 1952</h2>
+
+<p>Tucked behind an outlet box in a South Park Victorian, an electrician found a handwritten letter dated June 1952. It was a love letter — deeply personal, written by someone named "R" to someone named "Dotty." It referenced Balboa Park, the Coronado ferry (which stopped running in 1969 when the bridge opened), and a restaurant on Fifth Avenue that no longer exists. The current homeowner framed it and hung it in the hallway.</p>
+
+<h2>6. An Active Beehive With an Estimated 40,000 Bees</h2>
+
+<p>In a Rancho Bernardo home, what started as a simple ceiling fan installation turned into a bee removal operation. The electrician cut into the ceiling and found a massive beehive — roughly three feet long — with an estimated 40,000 honeybees. A local beekeeper relocated the colony, and the homeowner ended up with about 15 pounds of honey. "I've seen hives in walls maybe four times in my career," the electrician said. "But never one that big. The whole wall was warm to the touch."</p>
+
+<h2>7. A Hidden Room</h2>
+
+<p>The winner. An electrician working on an old home in Bankers Hill was tracing a circuit that didn't make sense — there was a wire going into a wall that shouldn't have had anything on the other side. When they opened it up, they found a small, sealed room about 4 feet by 6 feet. Inside: a chair, a shelf with three bottles (empty), and a light fixture with a pull chain. The home was built in 1919, right at the start of Prohibition. The room appeared to have been used as a hidden drinking spot, then sealed up and forgotten about for over a hundred years.</p>
+
+<h2>What These Stories Tell You About Old San Diego Homes</h2>
+
+<p>Beyond the entertainment value, these discoveries highlight something important: older San Diego homes are full of surprises, and not all of them are charming. Outdated wiring, animal damage, and DIY electrical work from decades past are real safety hazards. If your home was built before 1980, it's worth having a licensed electrician do an inspection — you might not find a hidden Prohibition speakeasy, but you might find something that prevents a fire.</p>
+
+<p>Need an electrician in your neighborhood? <a href="/electricians">Find top-rated San Diego electricians</a> who've seen it all — possums included.</p>
+`,
+    author: 'SD Local Pros',
+    publishedAt: '2026-02-21',
+    updatedAt: '2026-02-21',
+    tags: ['electricians', 'old homes', 'home renovation', 'san diego history'],
+    relatedCategories: ['electricians'],
+    relatedNeighborhoods: ['la-jolla', 'hillcrest', 'north-park', 'ocean-beach'],
+  },
+
+  // ============================================================
+  // POST 8: Neighborhoods with oldest plumbing
+  // ============================================================
+  {
+    slug: 'san-diego-neighborhoods-with-oldest-plumbing',
+    title: 'The 5 San Diego Neighborhoods Most Likely to Have Plumbing Nightmares (and What to Do About It)',
+    metaTitle: '5 San Diego Neighborhoods With the Oldest Plumbing — What Homeowners Need to Know',
+    metaDescription: 'Which San Diego neighborhoods have the oldest pipes? We break down the 5 areas most at risk for plumbing failures and what homeowners should watch for.',
+    excerpt: 'If your home was built before 1970, there\'s a good chance your pipes have stories to tell. Here are the San Diego neighborhoods where plumbing problems hide behind beautiful Craftsman exteriors.',
+    content: `
+<p>San Diego has some of the most beautiful residential architecture in California. It also has some of the oldest pipes. And those two things create a very specific problem: gorgeous Craftsman bungalows and Spanish Colonial homes with plumbing systems that are quietly falling apart behind the walls.</p>
+
+<p>We talked to plumbers who've worked across every San Diego neighborhood to find out which areas give them the most business — and what homeowners in those neighborhoods need to know.</p>
+
+<h2>1. North Park (Homes Built 1910s–1940s)</h2>
+
+<p>North Park is the epicenter of San Diego's plumbing challenges. The neighborhood's charming Craftsman and Spanish-style homes are beloved for a reason — they're beautiful, walkable, and full of character. They're also sitting on top of galvanized steel pipes that have been slowly corroding for 80 to 100 years.</p>
+
+<p><strong>The main issue:</strong> Galvanized pipes. These steel pipes were the standard until the 1960s, and they corrode from the inside out. By the time you notice low water pressure or rusty water, the pipes are often too far gone for a spot repair. A full repipe in North Park typically runs $8,000 to $15,000 depending on the size of the home and accessibility.</p>
+
+<p><strong>What to watch for:</strong> Discolored water when you first turn on a faucet, gradually decreasing water pressure over months, and pinhole leaks in horizontal pipe runs.</p>
+
+<h2>2. Hillcrest (Homes Built 1920s–1950s)</h2>
+
+<p>Hillcrest shares North Park's building era and many of the same plumbing issues. But Hillcrest adds a twist: the neighborhood's hilly terrain means sewer laterals — the pipe connecting your house to the city main — often run at steep angles and are prone to root intrusion from the neighborhood's mature trees.</p>
+
+<p><strong>The main issue:</strong> Sewer lateral failures. Tree roots love old clay sewer pipes because they're slightly porous and carry water (exactly what roots seek out). A camera inspection of your sewer lateral costs $150 to $300 and can save you from a $10,000 surprise.</p>
+
+<p><strong>What to watch for:</strong> Slow drains throughout the house (not just one fixture), gurgling sounds when you flush, and unexplained wet spots in the yard.</p>
+
+<h2>3. Golden Hill (Homes Built 1900s–1930s)</h2>
+
+<p>Golden Hill has some of the oldest residential structures in San Diego. Some homes here predate modern plumbing codes by decades. Plumbers who work in Golden Hill regularly encounter original cast iron drain lines, lead supply connections, and gas pipes that have been repurposed for water (yes, really).</p>
+
+<p><strong>The main issue:</strong> A mix of everything. Golden Hill homes have been repaired, patched, and modified by generations of owners. It's common to find three or four different pipe materials in a single home — galvanized steel transitioning to copper transitioning to CPVC, connected with creative (and not always code-compliant) fittings.</p>
+
+<p><strong>What to watch for:</strong> Any home purchase in Golden Hill should include a detailed plumbing inspection beyond the standard home inspection. Budget for replumbing if the home still has original pipes.</p>
+
+<h2>4. University Heights (Homes Built 1910s–1940s)</h2>
+
+<p>Sandwiched between North Park and Hillcrest, University Heights has the same vintage housing stock and the same pipe problems. The added challenge here is that many homes in University Heights have been converted to duplexes or have ADUs added, meaning the original plumbing system is now serving more fixtures than it was designed for.</p>
+
+<p><strong>The main issue:</strong> Overloaded systems. Pipes that were sized for a two-bedroom, one-bathroom home in 1925 are now servicing a duplex with four bathrooms and two kitchens. This accelerates corrosion and increases the likelihood of failures.</p>
+
+<p><strong>What to watch for:</strong> Pressure drops when multiple fixtures are running, recurring clogs, and water hammer (banging pipes when you turn off a faucet).</p>
+
+<h2>5. South Park (Homes Built 1905–1940s)</h2>
+
+<p>South Park rounds out the mid-city ring of neighborhoods with vintage plumbing. The neighborhood's smaller lot sizes mean that sewer laterals are often short but shallow, making them more susceptible to damage from landscaping and surface activity. South Park also has a surprising number of homes still connected to original clay sewer mains.</p>
+
+<p><strong>The main issue:</strong> Shallow sewer laterals and aged clay connections. A plumber who works extensively in South Park estimated that 60% of homes in the neighborhood still have original clay sewer lines.</p>
+
+<p><strong>What to watch for:</strong> Sewer backups during heavy rain, sinkholes or depressions in the yard near the sewer line path, and persistent sewer odors.</p>
+
+<h2>What Every Owner of an Older San Diego Home Should Do</h2>
+
+<p>If your home was built before 1960, consider scheduling a plumbing assessment. It doesn't need to be expensive — a general inspection with a camera scope of the sewer lateral typically costs $250 to $500 and gives you a complete picture of what's happening behind your walls and under your foundation.</p>
+
+<p>The pros who specialize in older San Diego homes know what to look for and can tell you what needs attention now versus what can wait. The worst plumbing emergencies are almost always the ones that could have been caught with a $300 inspection.</p>
+
+<p>Find a plumber who knows your neighborhood: <a href="/plumbers">Browse San Diego plumbers by neighborhood</a>.</p>
+`,
+    author: 'SD Local Pros',
+    publishedAt: '2026-02-22',
+    updatedAt: '2026-02-22',
+    tags: ['plumbers', 'old homes', 'home buying', 'neighborhood guide'],
+    relatedCategories: ['plumbers'],
+    relatedNeighborhoods: ['north-park', 'hillcrest', 'south-park', 'university-heights'],
+  },
+
+  // ============================================================
+  // POST 9: AC can't cool the house
+  // ============================================================
+  {
+    slug: 'why-your-san-diego-ac-runs-all-day-and-still-cant-cool-your-house',
+    title: 'Why Your San Diego AC Runs All Day and Still Can\'t Cool Your House (It\'s Probably Not the AC)',
+    metaTitle: 'AC Running All Day But House Still Hot? San Diego HVAC Pros Explain Why',
+    metaDescription: 'Your San Diego AC runs nonstop but the house stays warm. Before you replace the whole unit, read what local HVAC pros say is actually causing the problem.',
+    excerpt: 'It\'s August in San Diego, your AC hasn\'t stopped running since 9 AM, and your house is still 78 degrees. Before you panic-buy a new unit, local HVAC pros want you to check these things first.',
+    content: `
+<p>Every August and September, San Diego HVAC companies get the same panicked call: "My AC has been running all day and my house won't go below 78. I think I need a new system." And every August and September, the answer is usually the same: your AC is probably fine. Something else is the problem.</p>
+
+<p>We talked to HVAC technicians who service homes from Coronado to Rancho Bernardo about the most common reasons a San Diego AC system can't keep up — and most of them have nothing to do with the AC unit itself.</p>
+
+<h2>The #1 Reason: Your Ducts Are Leaking Into the Attic</h2>
+
+<p>This is the answer roughly 60% of the time. Your air conditioner is producing cold air just fine. But somewhere between the unit and your living room, that cold air is escaping into your attic through leaky ductwork — and your attic is 140 degrees in August.</p>
+
+<p>Think about what that means: your AC is working perfectly, but you're air-conditioning your attic instead of your house. The cold air never reaches your rooms, the thermostat never reaches the target temperature, so the system just runs and runs and runs.</p>
+
+<p><strong>The fix:</strong> Duct sealing. A professional duct sealing job costs $800 to $2,000 depending on the size of the system and accessibility. Compare that to $8,000 to $15,000 for a new AC system you probably don't need. An HVAC tech can do a pressure test on your ducts in about 30 minutes to tell you if this is the issue.</p>
+
+<h2>Your Insulation Is Missing or Compressed</h2>
+
+<p>San Diego homeowners tend to think of insulation as something for cold climates. Wrong. Insulation keeps heat out just as effectively as it keeps heat in. And many San Diego homes — especially those built before the 1980s — have insulation that's either insufficient, damaged, or completely missing in sections of the attic.</p>
+
+<p>If you can see the ceiling joists when you look into your attic, your insulation isn't doing its job. In a properly insulated San Diego attic, you shouldn't be able to see any wood — the insulation should be above the joist line.</p>
+
+<p><strong>The fix:</strong> Adding blown-in insulation to your attic costs $1,500 to $3,500 for most San Diego homes. It'll reduce your AC runtime by 20% to 40% and pay for itself in energy savings within two to three years.</p>
+
+<h2>Your Windows Are Cooking Your House</h2>
+
+<p>San Diego's western-facing homes take a beating in the afternoon. If your living room or bedroom has large, west-facing windows — especially single-pane windows — the solar heat gain through those windows can overwhelm even a properly sized AC system during peak afternoon hours.</p>
+
+<p>This is especially common in coastal neighborhoods like Pacific Beach, Ocean Beach, and Point Loma where homes were originally designed to capture ocean breezes, not withstand 95-degree Santa Ana heat.</p>
+
+<p><strong>The fix:</strong> Before replacing windows (expensive), try exterior shade solutions like awnings or solar screens. Blackout curtains on west-facing windows during afternoon hours can reduce solar heat gain by 33%. If you do upgrade windows, low-E glass with a low solar heat gain coefficient makes a dramatic difference.</p>
+
+<h2>Your AC Is the Right Size — For the Wrong House</h2>
+
+<p>Here's a scenario HVAC pros see constantly in San Diego: a homeowner buys a 1,400-square-foot home in Mission Valley with a 2.5-ton AC unit. The system worked great when the house was built in 1985. But since then, the homeowner has added a sunroom, converted the garage to a bedroom, and installed a kitchen island with a six-burner range that pumps out heat like a small furnace. The AC is now cooling 2,000 square feet of living space with a system sized for 1,400.</p>
+
+<p><strong>The fix:</strong> A load calculation. Any reputable HVAC company can do a Manual J load calculation that accounts for your home's actual square footage, insulation levels, window exposure, and heat-generating appliances. This tells you exactly what tonnage your home needs. If your system is undersized, now you know — and you can make an informed decision about upgrading.</p>
+
+<h2>The Thermostat Is in a Bad Spot</h2>
+
+<p>If your thermostat is in a hallway that gets direct afternoon sun, near a kitchen, or above a heat-generating appliance like a dryer, it's reading a temperature that doesn't represent the rest of the house. The thermostat thinks the house is hotter than it is, so it runs the AC constantly trying to cool a temperature that only exists in one spot.</p>
+
+<p><strong>The fix:</strong> Relocating a thermostat costs $150 to $300 and takes about an hour. Move it to an interior wall in a room that represents the average temperature of your home — typically a central hallway that doesn't get direct sunlight.</p>
+
+<h2>When It Actually Is the AC</h2>
+
+<p>About 20% of the time, the system itself is the problem. The most common actual AC issues in San Diego are low refrigerant (from a slow leak), a failing compressor, or a dirty evaporator coil that's frozen over. A good HVAC tech can diagnose these in under an hour.</p>
+
+<p>The point is: don't let someone sell you a $12,000 AC system before checking the $300 to $2,000 fixes first.</p>
+
+<p>Need an honest HVAC assessment? <a href="/hvac">Find top-rated HVAC pros in your San Diego neighborhood</a>.</p>
+`,
+    author: 'SD Local Pros',
+    publishedAt: '2026-02-23',
+    updatedAt: '2026-02-23',
+    tags: ['hvac', 'air conditioning', 'energy efficiency', 'home maintenance'],
+    relatedCategories: ['hvac'],
+    relatedNeighborhoods: ['pacific-beach', 'ocean-beach', 'mission-valley', 'coronado'],
+  },
+
+  // ============================================================
+  // POST 10: Drought-tolerant landscaper story
+  // ============================================================
+  {
+    slug: 'landscaper-turned-million-dollar-business-drought-tolerant-san-diego',
+    title: 'How One Landscaper Turned San Diego\'s Drought Restrictions Into a Million-Dollar Business',
+    metaTitle: 'San Diego Landscaper Built a Million-Dollar Business From Drought Restrictions',
+    metaDescription: 'When San Diego\'s water restrictions killed traditional landscaping, one Encinitas landscaper pivoted to drought-tolerant design and built a million-dollar company.',
+    excerpt: 'While other landscapers complained about water restrictions killing their business, one Encinitas crew went all-in on drought-tolerant design. Five years later, they can\'t hire fast enough.',
+    content: `
+<p>In 2015, California's drought restrictions hit San Diego landscapers like a wrecking ball. Mandatory water reduction targets meant homeowners were ripping out lawns instead of installing them. Irrigation work dried up (literally). Several long-established landscaping companies in the county went under.</p>
+
+<p>One crew in Encinitas saw the same crisis and had a different reaction: this is the future, and we're going to own it.</p>
+
+<h2>The Pivot</h2>
+
+<p>The company had been doing traditional landscaping for eight years — lawns, sprinkler systems, seasonal plantings, the usual. When the drought restrictions hit, their phone stopped ringing for about three weeks. Instead of waiting it out, the owner did something most of his competitors didn't: he enrolled in a UC San Diego Extension course on sustainable landscape design, got certified as a drought-tolerant landscape specialist through the California Landscape Contractors Association, and completely restructured his service offerings in 90 days.</p>
+
+<p>Out went sod installation, weekly mowing contracts, and sprinkler repairs. In came native plant design, permeable hardscape, rain capture systems, and turf removal.</p>
+
+<h2>Timing Meets Preparation</h2>
+
+<p>The timing turned out to be perfect. San Diego's turf replacement rebate program was paying homeowners up to $3.50 per square foot to remove their lawns. Suddenly, homeowners weren't just willing to go drought-tolerant — they were being paid to do it. And there were very few landscapers in San Diego who could actually design a beautiful drought-tolerant yard. Most were still trying to do traditional landscaping with fewer watering days.</p>
+
+<p>The Encinitas crew was one of the first in the county to specialize exclusively in drought-tolerant landscape design. Not as an add-on. Not as a "we can do that too." As their entire identity.</p>
+
+<h2>What Makes a Drought-Tolerant Yard Actually Look Good</h2>
+
+<p>The biggest misconception about drought-tolerant landscaping is that it means rocks and cacti. In reality, a well-designed water-wise yard in San Diego can be lush, colorful, and full of texture — it just uses plants that evolved to thrive in our Mediterranean climate instead of fighting against it.</p>
+
+<p>Some of the most popular plants for San Diego drought-tolerant designs include California native sages (Cleveland sage smells incredible), Baja fairy duster, red fountain grass, blue chalk sticks (a succulent ground cover that looks otherworldly), and various species of lavender that attract pollinators and smell fantastic during the warm months.</p>
+
+<p>The best drought-tolerant designs also incorporate hardscape elements — flagstone pathways, decomposed granite patios, dry creek beds — that reduce the total planted area while creating visual interest and usable outdoor space.</p>
+
+<h2>The Numbers</h2>
+
+<p>A typical drought-tolerant landscape conversion in San Diego runs $8,000 to $25,000 depending on the yard size and design complexity. The average water savings? 50% to 70% reduction in outdoor water use. In San Diego, where water rates have increased 73% in the last decade, that's real money — typically $100 to $200 per month in savings for a home with a standard-sized yard.</p>
+
+<p>For the Encinitas company, the pivot paid off dramatically. Revenue tripled in the first two years of the transition. By 2020, they'd grown from a three-person crew to 15 employees. Today they're booked out four to six weeks and turning away work.</p>
+
+<h2>The Lesson for San Diego Homeowners</h2>
+
+<p>If you're still maintaining a traditional lawn in San Diego, you're spending more money on water every year while your yard gets more expensive to maintain. A drought-tolerant conversion has upfront costs, but the math works out within three to four years — and your property value increases too. According to local real estate agents, a well-designed drought-tolerant landscape adds 5% to 10% to a home's curb appeal value in San Diego's market.</p>
+
+<p>The key is hiring a landscaper who specializes in drought-tolerant design, not just one who'll rip out your lawn and throw down gravel. The difference between a $10,000 yard that looks like a parking lot and a $10,000 yard that looks like a botanical garden is entirely in the design expertise.</p>
+
+<p>Ready to make the switch? <a href="/landscapers">Find drought-tolerant landscaping specialists in your San Diego neighborhood</a>.</p>
+`,
+    author: 'SD Local Pros',
+    publishedAt: '2026-02-24',
+    updatedAt: '2026-02-24',
+    tags: ['landscapers', 'drought tolerant', 'water conservation', 'entrepreneur stories', 'encinitas'],
+    relatedCategories: ['landscapers'],
+    relatedNeighborhoods: ['encinitas', 'la-jolla', 'carmel-valley', 'del-mar'],
+  },
 ];
 
 export function getBlogPost(slug: string): BlogPost | undefined {
