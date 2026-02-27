@@ -1,14 +1,48 @@
-import { Metadata } from 'next';
-import { Mail, MessageSquare } from 'lucide-react';
+'use client';
+
+import { useState } from 'react';
+import { Mail, MessageSquare, CheckCircle2 } from 'lucide-react';
 import { Breadcrumbs } from '@/components/ui';
 
-export const metadata: Metadata = {
-  title: 'Contact Us',
-  description: 'Get in touch with San Diego Local Pros. Questions about listings, partnerships, or advertising? We\'d love to hear from you.',
-  alternates: { canonical: 'https://sdlocalpros.com/contact' },
-};
-
 export default function ContactPage() {
+  const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setLoading(true);
+    const form = e.currentTarget;
+    const data = new FormData(form);
+    const body = Object.fromEntries(data.entries());
+
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
+      });
+      if (res.ok) setSubmitted(true);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  if (submitted) {
+    return (
+      <section className="section-white">
+        <div className="container-tight text-center py-20">
+          <CheckCircle2 className="w-16 h-16 text-green-500 mx-auto mb-6" />
+          <h1 className="text-headline-mobile text-apple-black mb-4">Message Sent!</h1>
+          <p className="text-body-lg text-apple-gray-dark max-w-lg mx-auto">
+            Thanks for reaching out. We&apos;ll get back to you within 24 hours.
+          </p>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <>
       <section className="bg-gradient-to-b from-apple-blue-bg/30 to-white pt-12 pb-16">
@@ -24,10 +58,9 @@ export default function ContactPage() {
       <section className="section-white">
         <div className="container-tight">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-            {/* Contact Form */}
             <div>
               <h2 className="text-title text-apple-black mb-6">Send us a message</h2>
-              <form className="space-y-5" action="/api/contact" method="POST">
+              <form onSubmit={handleSubmit} className="space-y-5">
                 <div>
                   <label htmlFor="name" className="block text-body-sm font-medium text-apple-black mb-1.5">Name</label>
                   <input id="name" name="name" type="text" required className="input-field" placeholder="Your name" />
@@ -50,11 +83,12 @@ export default function ContactPage() {
                   <label htmlFor="message" className="block text-body-sm font-medium text-apple-black mb-1.5">Message</label>
                   <textarea id="message" name="message" required rows={5} className="input-field" placeholder="How can we help?" />
                 </div>
-                <button type="submit" className="btn-primary w-full sm:w-auto">Send Message</button>
+                <button type="submit" disabled={loading} className="btn-primary w-full sm:w-auto disabled:opacity-50">
+                  {loading ? 'Sending...' : 'Send Message'}
+                </button>
               </form>
             </div>
 
-            {/* Contact Info */}
             <div>
               <h2 className="text-title text-apple-black mb-6">Other ways to reach us</h2>
               <div className="space-y-6">

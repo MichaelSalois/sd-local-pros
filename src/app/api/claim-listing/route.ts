@@ -6,7 +6,7 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { businessName, contactName, email, phone, message } = body;
+    const { businessName, contactName, contactEmail, contactPhone, message } = body;
 
     await resend.emails.send({
       from: 'SD Local Pros <notifications@sdlocalpros.com>',
@@ -18,8 +18,8 @@ export async function POST(request: Request) {
         <p><strong>Type:</strong> claim_request</p>
         <p><strong>Business:</strong> ${businessName}</p>
         <p><strong>Contact:</strong> ${contactName}</p>
-        <p><strong>Email:</strong> ${email}</p>
-        <p><strong>Phone:</strong> ${phone}</p>
+        <p><strong>Email:</strong> ${contactEmail}</p>
+        <p><strong>Phone:</strong> ${contactPhone}</p>
         <p><strong>Message:</strong> ${message || 'None'}</p>
         <p><strong>Submitted:</strong> ${new Date().toISOString()}</p>
       `,

@@ -6,7 +6,7 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { businessName, contactName, email, phone, category, neighborhood, website, message } = body;
+    const { businessName, contactName, contactEmail, phone, categorySlug, neighborhoodSlug, address, website, description } = body;
 
     await resend.emails.send({
       from: 'SD Local Pros <notifications@sdlocalpros.com>',
@@ -18,12 +18,13 @@ export async function POST(request: Request) {
         <p><strong>Type:</strong> new_listing</p>
         <p><strong>Business:</strong> ${businessName}</p>
         <p><strong>Contact:</strong> ${contactName}</p>
-        <p><strong>Email:</strong> ${email}</p>
+        <p><strong>Email:</strong> ${contactEmail}</p>
         <p><strong>Phone:</strong> ${phone}</p>
-        <p><strong>Category:</strong> ${category || 'Not specified'}</p>
-        <p><strong>Neighborhood:</strong> ${neighborhood || 'Not specified'}</p>
+        <p><strong>Category:</strong> ${categorySlug || 'Not specified'}</p>
+        <p><strong>Neighborhood:</strong> ${neighborhoodSlug || 'Not specified'}</p>
+        <p><strong>Address:</strong> ${address || 'Not provided'}</p>
         <p><strong>Website:</strong> ${website || 'Not provided'}</p>
-        <p><strong>Message:</strong> ${message || 'None'}</p>
+        <p><strong>Description:</strong> ${description || 'None'}</p>
         <p><strong>Submitted:</strong> ${new Date().toISOString()}</p>
       `,
     });
