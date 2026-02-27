@@ -1,99 +1,36 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { supabase, submitBusinessListing } from '@/lib/supabase';
+import { NextResponse } from 'next/server';
+import { Resend } from 'resend';
 
-export async function POST(request: NextRequest) {
+const resend = new Resend(process.env.RESEND_API_KEY);
+
+export async function POST(request: Request) {
   try {
     const body = await request.json();
+    const { businessName, contactName, email, phone, category, neighborhood, website, message } = body;
 
-    const {
-      businessName,
-      categorySlug,
-      categoryOther,
-      neighborhoodSlug,
-      address,
-      phone,
-      website,
-      contactName,
-      contactEmail,
-      contactPhone,
-      description,
-      message,
-    } = body;
-
-    // Validate required fields
-    if (!businessName || !categorySlug || !neighborhoodSlug || !contactName || !contactEmail) {
-      return NextResponse.json(
-        { error: 'Missing required fields' },
-        { status: 400 }
-      );
-    }
-
-    // 1. Save to businesses table (status: pending)
-    const result = await submitBusinessListing({
-      name: businessName,
-      categorySlug: categorySlug === 'other' ? 'other' : categorySlug,
-      categoryOther: categorySlug === 'other' ? categoryOther : undefined,
-      neighborhoodSlug,
-      address: address || '',
-      phone: phone || '',
-      website: website || '',
-      contactName,
-      contactEmail,
-      contactPhone: contactPhone || '',
-      description: description || message || '',
+    await resend.emails.send({
+      from: 'SD Local Pros <notifications@sdlocalpros.com>',
+      to: 'michael@saloisdigital.com',
+      subject: `🔔 New Business Submission — ${businessName}`,
+      html: `
+        <h2>New SD Local Pros Submission</h2>
+        <hr>
+        <p><strong>Type:</strong> new_listing</p>
+        <p><strong>Business:</strong> ${businessName}</p>
+        <p><strong>Contact:</strong> ${contactName}</p>
+        <p><strong>Email:</strong> ${email}</p>
+        <p><strong>Phone:</strong> ${phone}</p>
+        <p><strong>Category:</strong> ${category || 'Not specified'}</p>
+        <p><strong>Neighborhood:</strong> ${neighborhood || 'Not specified'}</p>
+        <p><strong>Website:</strong> ${website || 'Not provided'}</p>
+        <p><strong>Message:</strong> ${message || 'None'}</p>
+        <p><strong>Submitted:</strong> ${new Date().toISOString()}</p>
+      `,
     });
 
-    if (!result.success) {
-      console.error('Supabase insert error:', result.error);
-    }
-
-    // 2. Also save to form_submissions table (legacy tracking)
-    await supabase.from('form_submissions').insert({
-      type: 'add',
-      business_name: businessName,
-      category: categorySlug === 'other' ? `other: ${categoryOther}` : categorySlug,
-      neighborhood: neighborhoodSlug,
-      contact_name: contactName,
-      contact_email: contactEmail,
-      contact_phone: contactPhone || '',
-      address: address || '',
-      website: website || '',
-      message: description || message || '',
-      status: 'pending',
-    });
-
-    // 3. Fire Zapier webhook for email/SMS notification
-    const webhookUrl = process.env.ZAPIER_WEBHOOK_URL;
-    if (webhookUrl) {
-      try {
-        await fetch(webhookUrl, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            type: 'new_business_submission',
-            businessName,
-            category: categorySlug === 'other' ? `Other: ${categoryOther}` : categorySlug,
-            neighborhood: neighborhoodSlug,
-            contactName,
-            contactEmail,
-            contactPhone: contactPhone || 'Not provided',
-            address: address || 'Not provided',
-            website: website || 'Not provided',
-            description: description || message || 'Not provided',
-            submittedAt: new Date().toISOString(),
-          }),
-        });
-      } catch (webhookError) {
-        console.error('Zapier webhook error:', webhookError);
-      }
-    }
-
-    return NextResponse.json({ success: true });
+    return NextResponse.json({ success: true, message: 'Listing submitted successfully' });
   } catch (error) {
     console.error('Submit listing error:', error);
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    );
+    return NextResponse.json({ success: false, message: 'Failed to submit listing' }, { status: 500 });
   }
 }

@@ -1,83 +1,33 @@
 import { NextResponse } from 'next/server';
-import { supabase } from '@/lib/supabase';
+import { Resend } from 'resend';
+
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function POST(request: Request) {
   try {
     const body = await request.json();
+    const { businessName, contactName, email, phone, message } = body;
 
-    const {
-      businessId,
-      businessName,
-      contactName,
-      contactEmail,
-      contactPhone,
-      message,
-    } = body;
+    await resend.emails.send({
+      from: 'SD Local Pros <notifications@sdlocalpros.com>',
+      to: 'michael@saloisdigital.com',
+      subject: `🔔 New Claim Request — ${businessName}`,
+      html: `
+        <h2>New SD Local Pros Submission</h2>
+        <hr>
+        <p><strong>Type:</strong> claim_request</p>
+        <p><strong>Business:</strong> ${businessName}</p>
+        <p><strong>Contact:</strong> ${contactName}</p>
+        <p><strong>Email:</strong> ${email}</p>
+        <p><strong>Phone:</strong> ${phone}</p>
+        <p><strong>Message:</strong> ${message || 'None'}</p>
+        <p><strong>Submitted:</strong> ${new Date().toISOString()}</p>
+      `,
+    });
 
-    // Basic validation
-    if (!businessName || !contactName || !contactEmail) {
-      return NextResponse.json(
-        { error: 'Business name, contact name, and email are required.' },
-        { status: 400 }
-      );
-    }
-
-    // Insert into Supabase
-    const { data, error } = await supabase
-      .from('form_submissions')
-      .insert({
-        type: 'claim',
-        business_name: businessName,
-        business_id: businessId || null,
-        contact_name: contactName,
-        contact_email: contactEmail,
-        contact_phone: contactPhone || null,
-        message: message || null,
-        status: 'pending',
-      })
-      .select()
-      .single();
-
-    if (error) {
-      console.error('Supabase error:', error);
-      return NextResponse.json(
-        { error: 'Failed to submit claim. Please try again.' },
-        { status: 500 }
-      );
-    }
-
-    // Fire Zapier webhook for email/SMS notification
-    const webhookUrl = process.env.ZAPIER_WEBHOOK_URL;
-    if (webhookUrl) {
-      try {
-        await fetch(webhookUrl, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            type: 'claim_request',
-            businessName,
-            businessId: businessId || 'Not matched — manual entry',
-            contactName,
-            contactEmail,
-            contactPhone: contactPhone || 'Not provided',
-            message: message || 'Not provided',
-            submittedAt: new Date().toISOString(),
-          }),
-        });
-      } catch (webhookError) {
-        console.error('Zapier webhook error:', webhookError);
-      }
-    }
-
-    return NextResponse.json(
-      { success: true, message: 'Claim submitted successfully!', id: data.id },
-      { status: 200 }
-    );
-  } catch (err) {
-    console.error('Claim listing error:', err);
-    return NextResponse.json(
-      { error: 'An unexpected error occurred.' },
-      { status: 500 }
-    );
+    return NextResponse.json({ success: true, message: 'Claim request submitted successfully' });
+  } catch (error) {
+    console.error('Claim listing error:', error);
+    return NextResponse.json({ success: false, message: 'Failed to submit claim request' }, { status: 500 });
   }
 }
